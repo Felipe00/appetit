@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Appetit</string>
+    <string name="sign_in_title_label">Seja bem-vindo(a)!</string>
+    <string name="sign_in_subtitle_label">Nós sabemos a importância de estar sempre de barriga cheia e o quanto isso pode ajudar no seu dia.</string>
+    <string name="sign_in_empty_fields_error">Preencha todos os campos</string>
+    <string name="sign_in_email_complete_hint">Insira seu email aqui</string>
+    <string name="sign_in_email_field_hint">Email</string>
+    <string name="sign_in_password_complete_hint">Insira sua senha aqui</string>
+    <string name="sign_in_password_field_hint">Senha</string>
 </resources>
