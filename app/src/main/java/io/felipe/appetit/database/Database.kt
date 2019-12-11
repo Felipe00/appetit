@@ -1,6 +1,7 @@
 package io.felipe.appetit.database
 
 import com.google.gson.annotations.SerializedName
+import java.text.NumberFormat
 
 class Database {
 
@@ -8,15 +9,16 @@ class Database {
     var id: Long? = null
     @SerializedName("name")
     var name: String? = null
-    @SerializedName("users")
-    var users: List<User>? = null
+    @SerializedName("user")
+    var user: User? = null
     @SerializedName("clients")
     var clients: List<Client>? = null
     @SerializedName("sales")
     var sales: List<Sale>? = null
     @SerializedName("products")
     var products: List<Product>? = null
-
+    @SerializedName("is_logged_in")
+    var isLoggedIn: Boolean? = null
 }
 
 class Client {
@@ -25,7 +27,6 @@ class Client {
     var id: Long? = null
     @SerializedName("name")
     var name: String? = null
-
 }
 
 class Product {
@@ -43,6 +44,9 @@ class Product {
     @SerializedName("options")
     var options: List<String>? = null
 
+    fun bindPrice(): String? {
+        return "R$ " + (price ?: 0 / 100)
+    }
 }
 
 class ProductsSold {
@@ -52,14 +56,13 @@ class ProductsSold {
     @SerializedName("name")
     var name: String? = null
     @SerializedName("price")
-    var price: String? = null
+    var price: Int? = null
     @SerializedName("option")
     var option: String? = null
     @SerializedName("comments")
     var comments: String? = null
     @SerializedName("quantity")
     var quantity: Int? = null
-
 }
 
 class Sale {
@@ -75,6 +78,18 @@ class Sale {
     @SerializedName("isPaid")
     var isPaid: Boolean? = null
 
+    fun bindClients(): String? {
+        return clients?.joinToString { "${it.name}" }
+    }
+
+    fun bindPrice(): String? {
+        return NumberFormat.getCurrencyInstance()
+            .format(productsSold?.sumBy { it.price ?: 0 / 100 }!!.toDouble() / 100)
+    }
+
+    fun bindProducts(): String? {
+        return productsSold?.joinToString { "${it.quantity}x ${it.name}" }
+    }
 }
 
 class User {
@@ -89,6 +104,4 @@ class User {
     var password: String? = null
     @SerializedName("company")
     var company: Long? = null
-    @SerializedName("is_logged_in")
-    var isLoggedIn: Boolean? = null
 }

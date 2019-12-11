@@ -7,4 +7,6 @@
     <string name="sign_in_email_field_hint">Email</string>
     <string name="sign_in_password_complete_hint">Insira sua senha aqui</string>
     <string name="sign_in_password_field_hint">Senha</string>
+    <string name="main_search_label">Digite sua busca aqui</string>
+    <string name="main_new_sale_label">FAZER NOVO PEDIDO</string>
 </resources>

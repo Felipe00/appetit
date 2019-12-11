@@ -10,7 +10,7 @@ import io.felipe.appetit.R
 import io.felipe.appetit.database.Database
 import io.felipe.appetit.database.PrefsDb
 import io.felipe.appetit.database.User
-import io.felipe.appetit.ui.MainActivity
+import io.felipe.appetit.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 
@@ -20,6 +20,14 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
 
+        val database = PrefsDb.init(this).getDatabase()
+        if (database.isLoggedIn == true) {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
         // Hack para alternar entre as Dicas (hint)
         inputLayoutEmail.hint = getString(R.string.sign_in_email_complete_hint)
         signInEmail.setOnFocusChangeListener { _, hasFocus ->
@@ -54,19 +62,15 @@ class SignInActivity : AppCompatActivity() {
 
     private fun doSignIn(email: String, password: String) {
         val db = PrefsDb.init(this@SignInActivity).getDatabase()
-        val user = getUser(db, email, password)
-        if (user == null) {
-            snackIt("Email ou Senha incorretos")
-        } else {
+        if (db.user?.email == email && db.user?.password == password) {
+            db.isLoggedIn = true
+            PrefsDb.init(this@SignInActivity).saveDatabase(db)
             startActivity(Intent(this@SignInActivity, MainActivity::class.java))
+            finish()
+        } else {
+            snackIt("Email ou Senha incorretos")
         }
     }
-
-    private fun getUser(
-        db: Database,
-        email: String,
-        password: String
-    ): User? = db.users?.filter { it.password == password }?.filter { it.email == email }?.first()
 
     private fun validate(email: String, password: String): Boolean {
         if (email.isEmpty() || password.isEmpty()) {
