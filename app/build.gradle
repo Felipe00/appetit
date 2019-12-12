@@ -6,6 +6,10 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+//
+// made with Love ❤ by github.com/felipe00.
+//
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
