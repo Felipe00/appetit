@@ -9,4 +9,15 @@
     <string name="sign_in_password_field_hint">Senha</string>
     <string name="main_search_label">Digite sua busca aqui</string>
     <string name="main_new_sale_label">FAZER NOVO PEDIDO</string>
+    <string name="new_sale_title_label">Informações para o pedido</string>
+    <string name="new_sale_subtitle_label">Preencha as informações abaixo para concluir o pedido.</string>
+    <string name="detail_product_title_label">Detalhes do pedido</string>
+    <string name="detail_product_subtitle_label">Caso queira, aproveite para adicionar alguma observação para este pedido.</string>
+    <string name="detail_product_option_title">Opções</string>
+    <string name="detail_product_option_subtitle">Escolha uma das opções de massas disponíveis abaixo.</string>
+    <string name="detail_product_comments">Observações</string>
+    <string name="choose_product_comments_field_hint">Deseja adicionar alguma obs.?</string>
+    <string name="detail_product_add_label">Adicionar</string>
+    <string name="detail_product_emption_option_error_toast">Escolha uma opção para continuar</string>
+    <string name="choose_product_total_label">Total:</string>
 </resources>

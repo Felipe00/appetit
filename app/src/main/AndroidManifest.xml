@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.sign_in.SignInActivity" android:windowSoftInputMode="stateHidden">
+        <activity android:name=".ui.new_sale.step1.DetailProductActivity"></activity>
+        <activity android:name=".ui.new_sale.NewSaleActivity" />
+        <activity
+            android:name=".ui.sign_in.SignInActivity"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,7 +21,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity" />
-
     </application>
 
 </manifest>

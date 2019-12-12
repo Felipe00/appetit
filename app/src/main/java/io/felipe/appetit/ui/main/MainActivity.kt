@@ -1,5 +1,6 @@
 package io.felipe.appetit.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import io.felipe.appetit.R
 import io.felipe.appetit.database.PrefsDb
 import io.felipe.appetit.database.Sale
+import io.felipe.appetit.ui.new_sale.NewSaleActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         cardNewSale.setOnClickListener {
-            // TODO Criar uma nova venda
+            startActivity(Intent(this@MainActivity, NewSaleActivity::class.java))
         }
 
         mainSearch.addTextChangedListener(object : TextWatcher {

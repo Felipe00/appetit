@@ -23,6 +23,7 @@ class SignInActivity : AppCompatActivity() {
         val database = PrefsDb.init(this).getDatabase()
         if (database.isLoggedIn == true) {
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 

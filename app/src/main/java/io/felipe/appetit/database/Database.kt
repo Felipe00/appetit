@@ -16,9 +16,25 @@ class Database {
     @SerializedName("sales")
     var sales: List<Sale>? = null
     @SerializedName("products")
-    var products: List<Product>? = null
+    private var products: List<Product>? = null
     @SerializedName("is_logged_in")
     var isLoggedIn: Boolean? = null
+    val sortedProducts: List<Product>?
+        get() {
+            var currentCategory = ""
+            return this.products?.map {
+                when {
+                    currentCategory.isEmpty() || currentCategory != it.category -> {
+                        currentCategory = it.category ?: ""
+                        it.isSection = true
+                    }
+                    else -> {
+                        it.isSection = false
+                    }
+                }
+                it
+            }
+        }
 }
 
 class Client {
@@ -43,38 +59,41 @@ class Product {
     var price: Int? = null
     @SerializedName("options")
     var options: List<String>? = null
+    var isSelected: Boolean? = null
+    var isSection: Boolean? = null
 
     fun bindPrice(): String? {
-        return "R$ " + (price ?: 0 / 100)
+        return NumberFormat.getCurrencyInstance().format((price ?: 0).toDouble() / 100)
     }
 }
 
-class ProductsSold {
-
+data class ProductsSold(
     @SerializedName("id")
-    var id: Long? = null
+    var id: Long? = null,
+    @SerializedName("id_product")
+    var idProduct: Long? = null,
     @SerializedName("name")
-    var name: String? = null
+    var name: String? = null,
     @SerializedName("price")
-    var price: Int? = null
+    var price: Int? = null,
     @SerializedName("option")
-    var option: String? = null
+    var option: String? = null,
     @SerializedName("comments")
-    var comments: String? = null
+    var comments: String? = null,
     @SerializedName("quantity")
     var quantity: Int? = null
-}
+)
 
 class Sale {
 
     @SerializedName("id")
     var id: Long? = null
     @SerializedName("products_sold")
-    var productsSold: List<ProductsSold>? = null
+    var productsSold: ArrayList<ProductsSold>? = null
     @SerializedName("soldAt")
     var soldAt: String? = null
     @SerializedName("clients")
-    var clients: List<Client>? = null
+    var clients: ArrayList<Client>? = null
     @SerializedName("isPaid")
     var isPaid: Boolean? = null
 
