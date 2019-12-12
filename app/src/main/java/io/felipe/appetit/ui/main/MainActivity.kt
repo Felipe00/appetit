@@ -44,7 +44,9 @@ class MainActivity : AppCompatActivity() {
     private fun peformSearch(text: String) {
         val db = PrefsDb.init(this@MainActivity).getDatabase()
         if (text.isEmpty()) {
-            saleAdapter.update(db.sales)
+            if (::saleAdapter.isInitialized) {
+                saleAdapter.update(db.sales)
+            }
             return
         }
         // filtrando listas de pedidos pelo nome do cliente

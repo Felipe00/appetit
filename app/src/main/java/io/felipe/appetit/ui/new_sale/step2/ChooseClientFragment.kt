@@ -1,4 +1,4 @@
-package io.felipe.appetit.ui.new_sale.step1
+package io.felipe.appetit.ui.new_sale.step2
 
 import android.content.Context
 import android.os.Bundle
@@ -7,20 +7,19 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import io.felipe.appetit.R
+import io.felipe.appetit.database.Client
 import io.felipe.appetit.database.Database
 import io.felipe.appetit.database.PrefsDb
-import io.felipe.appetit.database.ProductsSold
 import io.felipe.appetit.ui.new_sale.NewSaleActivity
-import kotlinx.android.synthetic.main.fragment_choose_product.*
-import java.text.NumberFormat
+import kotlinx.android.synthetic.main.fragment_choose_client.*
 import java.util.*
 
-class ChooseProductFragment : Fragment() {
+class ChooseClientFragment : Fragment() {
 
-    private lateinit var productAdapter: ListProductAdapter
+    private lateinit var clientAdapter: ListClientAdapter
     private lateinit var database: Database
     private var listener: OnFragmentInteractionListener? = null
 
@@ -33,20 +32,22 @@ class ChooseProductFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_choose_product, container, false)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_choose_client, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        with(chooseProductList) {
-            productAdapter = ListProductAdapter(database.sortedProducts ?: emptyList()) {
-                listener?.onFragmentInteraction(it, NewSaleActivity.PRODUCT)
+
+        with(chooseClientList) {
+            clientAdapter = ListClientAdapter(database.clients ?: emptyList()) {
+                listener?.onFragmentInteraction(it, NewSaleActivity.CLIENT)
             }
-            adapter = productAdapter
-            layoutManager = LinearLayoutManager(activity)
+            adapter = clientAdapter
+            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
         }
 
-        chooseProductSearch.addTextChangedListener(object : TextWatcher {
+        chooseClientSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
 
             }
@@ -59,50 +60,49 @@ class ChooseProductFragment : Fragment() {
                 peformSearch(s.toString())
             }
         })
-        chooseProductNextContainer.setOnClickListener {
-            (activity as NewSaleActivity).callClientsFragment()
+        chooseClientNextContainer.setOnClickListener {
+            Toast.makeText(activity, "Chamar step 3", Toast.LENGTH_LONG).show()
+            // (activity as NewSaleActivity).callClientsFragment()
         }
     }
 
     private fun peformSearch(text: String) {
-        productAdapter.update(database.sortedProducts?.filter {
+        clientAdapter.update(database.clients?.filter {
             it.name?.toUpperCase(Locale.getDefault())?.contains(text.toUpperCase(Locale.getDefault())) == true
         })
     }
 
-    fun updateList(productSold: ProductsSold) {
-        productAdapter.update(emptyList())
-        productAdapter.update(
-            database.sortedProducts?.map {
-                if (it.id == productSold.idProduct) {
-                    it.isSelected = true
-                }
+    fun updateList(clients: ArrayList<Client>) {
+        clientAdapter.update(emptyList())
+        clientAdapter.update(
+            database.clients?.map {
+                it.isSelected = it in clients
                 it
             }
         )
-        updateTotalPrice()
+        updateTotalClients()
     }
 
-    private fun updateTotalPrice() {
-        val selectedItems = (activity as NewSaleActivity).getProductSoldList()
+    private fun updateTotalClients() {
+        val selectedItems = (activity as NewSaleActivity).getClientList()
         if (selectedItems.isEmpty()) {
-            turnTotalPriceViewOff()
+            turnTotalClientsViewOff()
         } else {
-            chooseProductTotal.text = NumberFormat.getCurrencyInstance().format(
-                selectedItems.sumByDouble {
-                    ((it.price ?: 0) * (it.quantity ?: 0)).toDouble() / 100
-                }
-            )
-            turnTotalPriceViewOn()
+            if (selectedItems.size == 1) {
+                chooseClientTotal.text = "${selectedItems.size} cliente selecionado"
+            } else {
+                chooseClientTotal.text = "${selectedItems.size} clientes selecionados"
+            }
+            turnTotalClientsViewOn()
         }
     }
 
-    private fun turnTotalPriceViewOn() {
-        chooseProductTotalContainer.visibility = View.VISIBLE
+    private fun turnTotalClientsViewOn() {
+        chooseClientTotalContainer.visibility = View.VISIBLE
     }
 
-    private fun turnTotalPriceViewOff() {
-        chooseProductTotalContainer.visibility = View.GONE
+    private fun turnTotalClientsViewOff() {
+        chooseClientTotalContainer.visibility = View.GONE
     }
 
     override fun onAttach(context: Context) {
@@ -134,9 +134,9 @@ class ChooseProductFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @return A new instance of fragment ChooseProductFragment.
+         * @return A new instance of fragment ChooseClientFragment.
          */
         @JvmStatic
-        fun newInstance() = ChooseProductFragment().apply {}
+        fun newInstance() = ChooseClientFragment().apply {}
     }
 }

@@ -20,4 +20,13 @@
     <string name="detail_product_add_label">Adicionar</string>
     <string name="detail_product_emption_option_error_toast">Escolha uma opção para continuar</string>
     <string name="choose_product_total_label">Total:</string>
+    <string name="choose_client_total_singular_label">cliente selecionado</string>
+    <string name="choose_client_total_plural_label">clientes selecionados</string>
+    <string name="new_sale_progress_title_label_step_1">O que você está vendendo?</string>
+    <string name="new_sale_progress_title_label_step_2">Para quem você está vendendo?</string>
+    <string name="new_sale_progress_title_label_step_3">Finalizar pedido</string>
+    <string name="new_sale_progress_step_1">1 de 3</string>
+    <string name="new_sale_progress_step_2">2 de 3</string>
+    <string name="new_sale_progress_step_3">3 de 3</string>
+    <string name="new_sale_title_list_label">Meus clientes</string>
 </resources>

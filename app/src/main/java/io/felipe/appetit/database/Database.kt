@@ -43,6 +43,7 @@ class Client {
     var id: Long? = null
     @SerializedName("name")
     var name: String? = null
+    var isSelected: Boolean? = null
 }
 
 class Product {

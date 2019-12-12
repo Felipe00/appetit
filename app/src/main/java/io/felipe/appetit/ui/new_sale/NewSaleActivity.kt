@@ -1,27 +1,31 @@
 package io.felipe.appetit.ui.new_sale
 
+import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.transition.TransitionManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.google.gson.Gson
 import io.felipe.appetit.R
+import io.felipe.appetit.database.Client
 import io.felipe.appetit.database.Product
 import io.felipe.appetit.database.ProductsSold
 import io.felipe.appetit.database.Sale
 import io.felipe.appetit.ui.new_sale.step1.ChooseProductFragment
 import io.felipe.appetit.ui.new_sale.step1.DetailProductActivity
+import io.felipe.appetit.ui.new_sale.step2.ChooseClientFragment
 import kotlinx.android.synthetic.main.activity_new_sale.*
 
 const val PRODUCT_REQUEST = 10
 
-class NewSaleActivity : AppCompatActivity(), ChooseProductFragment.OnFragmentInteractionListener {
+class NewSaleActivity : AppCompatActivity(), ChooseProductFragment.OnFragmentInteractionListener,
+    ChooseClientFragment.OnFragmentInteractionListener {
 
     private lateinit var sale: Sale
     private lateinit var selectedProduct: Product
     private lateinit var chooseProductFragment: ChooseProductFragment
+    private lateinit var chooseClientFragment: ChooseClientFragment
 
     companion object {
         const val PRODUCT = 1
@@ -41,6 +45,13 @@ class NewSaleActivity : AppCompatActivity(), ChooseProductFragment.OnFragmentInt
                 )
             }
             CLIENT -> {
+                if (sale.clients == null) {
+                    sale.clients = ArrayList()
+                    sale.clients?.add(item as Client)
+                } else {
+                    checkMatchOccurrences(item as Client)
+                }
+                chooseClientFragment.updateList(sale.clients ?: ArrayList())
             }
             DATE -> {
             }
@@ -106,17 +117,43 @@ class NewSaleActivity : AppCompatActivity(), ChooseProductFragment.OnFragmentInt
         }
     }
 
-    fun getProductSoldList(): List<ProductsSold> = sale.productsSold ?: emptyList()
-
-    fun callClientsFragment() {
-        supportFragmentManager.inTransaction {
-            // add(newSaleFrameContainer, )
+    private fun checkMatchOccurrences(client: Client) {
+        val countMatchProducts =
+            sale.clients?.count { it.id == client.id } ?: 0
+        if (countMatchProducts > 0) {
+            sale.clients?.remove(client)
+        } else {
+            sale.clients?.add(client)
         }
     }
-}
 
-inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
-    val fragmentTransaction = beginTransaction()
-    fragmentTransaction.func()
-    fragmentTransaction.commit()
+    fun getProductSoldList(): List<ProductsSold> = sale.productsSold ?: emptyList()
+
+    fun getClientList(): List<Client> = sale.clients ?: emptyList()
+
+    fun callClientsFragment() {
+        // incrementar progresso
+        ObjectAnimator.ofInt(newSaleProgressBar, "progress", 2).start()
+        // alterar dicas de progresso
+        newSaleProgressTitle.text = getString(R.string.new_sale_progress_title_label_step_2)
+        newSaleProgressStep.text = getString(R.string.new_sale_progress_step_2)
+        // instanciar novo fragmento
+        chooseClientFragment = ChooseClientFragment.newInstance()
+        TransitionManager.beginDelayedTransition(newSaleFrameContainer)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.newSaleFrameContainer, chooseClientFragment).commit()
+    }
+
+    fun callDateFragment() {
+        // incrementar progresso
+        ObjectAnimator.ofInt(newSaleProgressBar, "progress", 3).start()
+        // alterar dicas de progresso
+        newSaleProgressTitle.text = getString(R.string.new_sale_progress_title_label_step_3)
+        newSaleProgressStep.text = getString(R.string.new_sale_progress_step_3)
+        // instanciar novo fragmento
+//        chooseClientFragment = ChooseClientFragment.newInstance()
+//        TransitionManager.beginDelayedTransition(newSaleFrameContainer)
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.newSaleFrameContainer, chooseClientFragment).commit()
+    }
 }
