@@ -7,7 +7,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import io.felipe.appetit.R
 import io.felipe.appetit.database.Client
@@ -61,8 +60,7 @@ class ChooseClientFragment : Fragment() {
             }
         })
         chooseClientNextContainer.setOnClickListener {
-            Toast.makeText(activity, "Chamar step 3", Toast.LENGTH_LONG).show()
-            // (activity as NewSaleActivity).callClientsFragment()
+             (activity as NewSaleActivity).callFinishSaleFragment()
         }
     }
 

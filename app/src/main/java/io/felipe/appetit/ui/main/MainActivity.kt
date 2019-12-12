@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         val database = PrefsDb.init(this).getDatabase()
         mainTitle.text = database.user?.name ?: "Não identificado"
         with(mainSaleList) {
-            saleAdapter = ListSaleAdapter(database.sales ?: emptyList()) {
+            saleAdapter = ListSaleAdapter(database.sales?.asReversed() ?: emptyList()) {
                 // TODO Em um futuro próximo: ao clicar, abrir uma tela de detalhes aqui
             }
             adapter = saleAdapter

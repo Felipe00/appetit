@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.new_sale.step3.FinishSaleFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/labelTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/finish_sale_title_label"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/font_size_18"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/finishSaleRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/labelTitle"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radioBtnYes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:background="@drawable/outline_border"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:text="Sim"
+                android:textSize="@dimen/font_size_16"
+                android:theme="@style/AppTheme.OrangeAccent" />
+
+            <RadioButton
+                android:id="@+id/radioBtnNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_general_margin_8"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:background="@drawable/outline_border"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:text="Não"
+                android:textSize="@dimen/font_size_16"
+                android:theme="@style/AppTheme.OrangeAccent" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/labelTitleDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/finishSaleRadioGroup"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/finish_sale_title_date_label"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/font_size_18"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/finishSaleDateContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/labelTitleDate"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:background="@drawable/outline_border"
+            android:minHeight="50dp">
+
+            <ImageView
+                android:id="@+id/finishSaleCalendarIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/activity_general_margin_8"
+                app:srcCompat="@drawable/ic_calendar" />
+
+            <TextView
+                android:id="@+id/finishSaleDateChosen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/finishSaleCalendarIcon"
+                android:padding="@dimen/activity_general_margin_8"
+                android:text="Selecione uma data"
+                android:textSize="@dimen/font_size_16" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="@dimen/activity_general_margin_32"
+                android:tint="@color/colorPrimary"
+                app:srcCompat="@drawable/ic_right" />
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/finishSaleAmemButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:alpha="0.5"
+            android:background="@drawable/orange_rounded"
+            android:clickable="false"
+            android:text="@string/finish_sale_label_button"
+            android:textColor="@color/colorWhite" />
+
+    </RelativeLayout>
+</FrameLayout>

@@ -42,7 +42,7 @@ class ListSaleAdapter(private var items: List<Sale>, var onClick: (Sale) -> Unit
 
     private fun getTotalPricePerDate(): Double =
         items.filter { it.soldAt == currentDate }.flatMap { it.productsSold!! }.sumBy {
-            it.price ?: 0
+            (it.price ?: 0) * (it.quantity ?: 0)
         }.toDouble() / 100
 
     fun update(newList: List<Sale>?) {

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.feedback.FeedbackActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/feedbackImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/img_feedback" />
+
+        <TextView
+            android:id="@+id/feedbackTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/feedbackImg"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_general_margin_24"
+            android:text="@string/feedback_title_label"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/font_size_24" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/feedbackAnotherSaleButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/feedbackTitle"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:padding="12dp"
+            android:text="@string/feedback_another_sale_label_button"
+            android:textColor="@color/colorWhite"
+            app:backgroundTint="@color/colorPrimary"
+            app:cornerRadius="20dp"
+            app:strokeColor="@color/colorPrimary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/feedbackBackButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/feedbackAnotherSaleButton"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:padding="12dp"
+            android:text="@string/feedback_back_label_button"
+            android:textColor="@color/colorAccent"
+            app:cornerRadius="20dp"
+            app:strokeColor="@color/colorAccent" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

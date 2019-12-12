@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.new_sale.step1.DetailProductActivity"></activity>
+        <activity android:name=".ui.feedback.FeedbackActivity"></activity>
+        <activity android:name=".ui.new_sale.step1.DetailProductActivity" />
         <activity android:name=".ui.new_sale.NewSaleActivity" />
         <activity
             android:name=".ui.sign_in.SignInActivity"

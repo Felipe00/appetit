@@ -29,4 +29,12 @@
     <string name="new_sale_progress_step_2">2 de 3</string>
     <string name="new_sale_progress_step_3">3 de 3</string>
     <string name="new_sale_title_list_label">Meus clientes</string>
+    <string name="finish_sale_title_label">O cliente já pagou?</string>
+    <string name="finish_sale_title_date_label">Em que data o pedido foi realizado?</string>
+    <string name="finish_sale_label_button">Finalizar Pedido</string>
+    <string name="finish_sale_date_error_toast">Escolha uma data para continuar</string>
+    <string name="finish_sale_is_paid_error_toast">O pedido já foi pago? Escolha uma opção</string>
+    <string name="feedback_title_label">Pedido realizado!</string>
+    <string name="feedback_another_sale_label_button">Fazer um novo pedido</string>
+    <string name="feedback_back_label_button">Voltar para a página inicial</string>
 </resources>

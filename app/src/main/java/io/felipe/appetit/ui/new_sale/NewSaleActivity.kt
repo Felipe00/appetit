@@ -8,29 +8,33 @@ import android.transition.TransitionManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import io.felipe.appetit.R
-import io.felipe.appetit.database.Client
-import io.felipe.appetit.database.Product
-import io.felipe.appetit.database.ProductsSold
-import io.felipe.appetit.database.Sale
+import io.felipe.appetit.database.*
+import io.felipe.appetit.ui.feedback.FeedbackActivity
 import io.felipe.appetit.ui.new_sale.step1.ChooseProductFragment
 import io.felipe.appetit.ui.new_sale.step1.DetailProductActivity
 import io.felipe.appetit.ui.new_sale.step2.ChooseClientFragment
+import io.felipe.appetit.ui.new_sale.step3.FinishSaleFragment
 import kotlinx.android.synthetic.main.activity_new_sale.*
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 const val PRODUCT_REQUEST = 10
 
 class NewSaleActivity : AppCompatActivity(), ChooseProductFragment.OnFragmentInteractionListener,
-    ChooseClientFragment.OnFragmentInteractionListener {
+    ChooseClientFragment.OnFragmentInteractionListener,
+    FinishSaleFragment.OnFragmentInteractionListener {
 
     private lateinit var sale: Sale
     private lateinit var selectedProduct: Product
     private lateinit var chooseProductFragment: ChooseProductFragment
     private lateinit var chooseClientFragment: ChooseClientFragment
+    private lateinit var finishSaleFragment: FinishSaleFragment
 
     companion object {
         const val PRODUCT = 1
         const val CLIENT = 2
-        const val DATE = 3
+        const val FINISH = 3
     }
 
     override fun onFragmentInteraction(item: Any, type: Int) {
@@ -53,7 +57,17 @@ class NewSaleActivity : AppCompatActivity(), ChooseProductFragment.OnFragmentInt
                 }
                 chooseClientFragment.updateList(sale.clients ?: ArrayList())
             }
-            DATE -> {
+            FINISH -> {
+                val map = item as HashMap<String, Any?>
+                sale.soldAt = map["date"] as String
+                sale.isPaid = map["isPaid"] as Boolean?
+                sale.id = Random().nextLong()
+                val database = PrefsDb.init(this@NewSaleActivity).getDatabase()
+                if (database.sales == null) database.sales = ArrayList()
+                database.sales?.add(sale)
+                PrefsDb.init(this@NewSaleActivity).saveDatabase(database)
+                startActivity(Intent(this@NewSaleActivity, FeedbackActivity::class.java))
+                finish()
             }
         }
     }
@@ -144,16 +158,16 @@ class NewSaleActivity : AppCompatActivity(), ChooseProductFragment.OnFragmentInt
             .replace(R.id.newSaleFrameContainer, chooseClientFragment).commit()
     }
 
-    fun callDateFragment() {
+    fun callFinishSaleFragment() {
         // incrementar progresso
         ObjectAnimator.ofInt(newSaleProgressBar, "progress", 3).start()
         // alterar dicas de progresso
         newSaleProgressTitle.text = getString(R.string.new_sale_progress_title_label_step_3)
         newSaleProgressStep.text = getString(R.string.new_sale_progress_step_3)
         // instanciar novo fragmento
-//        chooseClientFragment = ChooseClientFragment.newInstance()
-//        TransitionManager.beginDelayedTransition(newSaleFrameContainer)
-//        supportFragmentManager.beginTransaction()
-//            .replace(R.id.newSaleFrameContainer, chooseClientFragment).commit()
+        finishSaleFragment = FinishSaleFragment.newInstance()
+        TransitionManager.beginDelayedTransition(newSaleFrameContainer)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.newSaleFrameContainer, finishSaleFragment).commit()
     }
 }

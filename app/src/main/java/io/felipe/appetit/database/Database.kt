@@ -14,7 +14,7 @@ class Database {
     @SerializedName("clients")
     var clients: List<Client>? = null
     @SerializedName("sales")
-    var sales: List<Sale>? = null
+    var sales: ArrayList<Sale>? = null
     @SerializedName("products")
     private var products: List<Product>? = null
     @SerializedName("is_logged_in")
@@ -104,7 +104,9 @@ class Sale {
 
     fun bindPrice(): String? {
         return NumberFormat.getCurrencyInstance()
-            .format(productsSold?.sumBy { it.price ?: 0 / 100 }!!.toDouble() / 100)
+            .format(productsSold?.sumByDouble {
+                ((it.price ?: 0) * (it.quantity ?: 0)).toDouble() / 100.00
+            })
     }
 
     fun bindProducts(): String? {
