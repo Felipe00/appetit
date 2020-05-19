@@ -44,6 +44,10 @@ class MainActivity : AppCompatActivity() {
     private fun peformSearch(text: String) {
         val db = PrefsDb.init(this@MainActivity).getDatabase()
         if (text.isEmpty()) {
+            saleAdapter.update(db.sales?.sortedByDescending { it.soldAt })
+            return
+        }
+        if (text.isEmpty()) {
             if (::saleAdapter.isInitialized) {
                 saleAdapter.update(db.sales)
             }
@@ -83,11 +87,15 @@ class MainActivity : AppCompatActivity() {
         val database = PrefsDb.init(this).getDatabase()
         mainTitle.text = database.user?.name ?: "Não identificado"
         with(mainSaleList) {
-            saleAdapter = ListSaleAdapter(database.sales?.asReversed() ?: emptyList()) {
-                // TODO Em um futuro próximo: ao clicar, abrir uma tela de detalhes aqui
-            }
+
+            saleAdapter =
+                ListSaleAdapter(database.sales?.asReversed()?.sortedByDescending { it.soldAt }
+                    ?: emptyList()) {
+                    // TODO Em um futuro próximo: ao clicar, abrir uma tela de detalhes aqui
+                }
             adapter = saleAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)
         }
     }
 }
+
